@@ -1,0 +1,468 @@
+-- PressureCMD
+-- Version: 1.0.0
+
+-- Instances:
+
+local Tutorial = Instance.new("ScreenGui")
+local Frame = Instance.new("ImageLabel")
+local Title = Instance.new("TextLabel")
+local Remotes = Instance.new("TextButton")
+local Lighting = Instance.new("TextButton")
+local Fly = Instance.new("TextButton")
+local SpeedBoost = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+Tutorial.Name = "Tutorial"
+Tutorial.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Tutorial.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Name = "Frame"
+Frame.Parent = Tutorial
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 2
+Frame.Position = UDim2.new(0.614915252, 0, 0.204773799, 0)
+Frame.Size = UDim2.new(0, 368, 0, 469)
+Frame.Image = "rbxassetid://90430324105463"
+
+Title.Name = "Title"
+Title.Parent = Frame
+Title.BackgroundColor3 = Color3.fromRGB(54, 0, 1)
+Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 2
+Title.Position = UDim2.new(0.169800803, 0, 0, 0)
+Title.Size = UDim2.new(0, 242, 0, 50)
+Title.Font = Enum.Font.Unknown
+Title.Text = "PressureCMD"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 27.000
+Title.TextWrapped = true
+
+Remotes.Name = "Remotes"
+Remotes.Parent = Frame
+Remotes.BackgroundColor3 = Color3.fromRGB(54, 0, 1)
+Remotes.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Remotes.BorderSizePixel = 2
+Remotes.Position = UDim2.new(0.224413007, 0, 0.119402982, 0)
+Remotes.Size = UDim2.new(0, 200, 0, 50)
+Remotes.Font = Enum.Font.Unknown
+Remotes.Text = "Fire RemoteEvents"
+Remotes.TextColor3 = Color3.fromRGB(255, 255, 255)
+Remotes.TextSize = 25.000
+
+Lighting.Name = "Lighting"
+Lighting.Parent = Frame
+Lighting.BackgroundColor3 = Color3.fromRGB(54, 0, 1)
+Lighting.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Lighting.BorderSizePixel = 2
+Lighting.Position = UDim2.new(0.224413007, 0, 0.247334749, 0)
+Lighting.Size = UDim2.new(0, 200, 0, 50)
+Lighting.Font = Enum.Font.Unknown
+Lighting.Text = "Break Lighting"
+Lighting.TextColor3 = Color3.fromRGB(255, 255, 255)
+Lighting.TextSize = 25.000
+
+Fly.Name = "Fly"
+Fly.Parent = Frame
+Fly.BackgroundColor3 = Color3.fromRGB(54, 0, 1)
+Fly.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Fly.BorderSizePixel = 2
+Fly.Position = UDim2.new(0.224413007, 0, 0.375266522, 0)
+Fly.Size = UDim2.new(0, 200, 0, 50)
+Fly.Font = Enum.Font.Unknown
+Fly.Text = "Fly"
+Fly.TextColor3 = Color3.fromRGB(255, 255, 255)
+Fly.TextSize = 25.000
+
+SpeedBoost.Name = "SpeedBoost"
+SpeedBoost.Parent = Frame
+SpeedBoost.BackgroundColor3 = Color3.fromRGB(54, 0, 1)
+SpeedBoost.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SpeedBoost.BorderSizePixel = 2
+SpeedBoost.Position = UDim2.new(0.224413007, 0, 0.509594858, 0)
+SpeedBoost.Size = UDim2.new(0, 200, 0, 50)
+SpeedBoost.Font = Enum.Font.Unknown
+SpeedBoost.Text = "Speed Boost"
+SpeedBoost.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedBoost.TextSize = 25.000
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0, 0, 0.893390179, 0)
+TextLabel.Size = UDim2.new(0, 174, 0, 50)
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.Text = "v1.0.0"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextTransparency = 0.400
+TextLabel.TextWrapped = true
+
+-- Scripts:
+
+local function KOKLAN_fake_script() -- Remotes.LocalScript 
+	local script = Instance.new('LocalScript', Remotes)
+
+	local button = script.Parent
+	local StarterGui = game:GetService("StarterGui")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	
+	button.MouseButton1Click:Connect(function()
+		for _, remoteEvent in ipairs(ReplicatedStorage:GetDescendants()) do
+			if remoteEvent:IsA("RemoteEvent") then
+				pcall(function()
+					remoteEvent:FireServer()
+				end)
+			end
+		end
+	
+		StarterGui:SetCore("SendNotification", {
+			Title = "PressureCMD";
+			Text = "Remote Events fired, DO NOT blame PressureCMD and its creators if this breaks the game.";
+			Duration = 7;
+		})
+	end)
+	
+end
+coroutine.wrap(KOKLAN_fake_script)()
+local function PPKPV_fake_script() -- Lighting.LocalScript 
+	local script = Instance.new('LocalScript', Lighting)
+
+	local button = script.Parent
+	local lighting = game:GetService("Lighting")
+	local StarterGui = game:GetService("StarterGui")
+	
+	local fogRemoved = false
+	
+	local originalSettings = {
+		FogStart = lighting.FogStart,
+		FogEnd = lighting.FogEnd,
+		FogColor = lighting.FogColor,
+		Brightness = lighting.Brightness,
+		OutdoorAmbient = lighting.OutdoorAmbient,
+		Ambient = lighting.Ambient,
+		ShadowSoftness = lighting.ShadowSoftness,
+		GlobalShadows = lighting.GlobalShadows,
+		ClockTime = lighting.ClockTime,
+	}
+	
+	local function removeFog()
+		lighting.FogStart = 1e10
+		lighting.FogEnd = 1e10
+		lighting.FogColor = Color3.new(1, 1, 1)
+		lighting.Brightness = 2
+		lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+		lighting.Ambient = Color3.new(1, 1, 1)
+		lighting.ShadowSoftness = 0
+		lighting.GlobalShadows = false
+		lighting.ClockTime = 12
+	
+		for _, obj in ipairs(lighting:GetChildren()) do
+			if obj:IsA("Atmosphere") or obj:IsA("Sky") or obj:IsA("BloomEffect") or obj:IsA("SunRaysEffect") then
+				obj:Destroy()
+			end
+		end
+	end
+	
+	local function restoreFog()
+		lighting.FogStart = originalSettings.FogStart
+		lighting.FogEnd = originalSettings.FogEnd
+		lighting.FogColor = originalSettings.FogColor
+		lighting.Brightness = originalSettings.Brightness
+		lighting.OutdoorAmbient = originalSettings.OutdoorAmbient
+		lighting.Ambient = originalSettings.Ambient
+		lighting.ShadowSoftness = originalSettings.ShadowSoftness
+		lighting.GlobalShadows = originalSettings.GlobalShadows
+		lighting.ClockTime = originalSettings.ClockTime
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		if fogRemoved then
+			restoreFog()
+			StarterGui:SetCore("SendNotification", {
+				Title = "PressureCMD";
+				Text = "Fixed Lighting";
+				Duration = 3;
+			})
+		else
+			removeFog()
+			StarterGui:SetCore("SendNotification", {
+				Title = "PressureCMD";
+				Text = "Broke Lighting";
+				Duration = 5;
+			})
+		end
+		fogRemoved = not fogRemoved
+	end)
+	
+end
+coroutine.wrap(PPKPV_fake_script)()
+local function KJBD_fake_script() -- Fly.LocalScript 
+	local script = Instance.new('LocalScript', Fly)
+
+	local button = script.Parent
+	local player = game.Players.LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local hrp = character:WaitForChild("HumanoidRootPart")
+	local humanoid = character:WaitForChild("Humanoid")
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local StarterGui = game:GetService("StarterGui")
+	
+	local flying = false
+	local speed = 50
+	
+	local bodyVelocity
+	local bodyGyro
+	
+	local keysDown = {}
+	
+	local function updateMoveDirection()
+		local cam = workspace.CurrentCamera
+		local lookVector = cam.CFrame.LookVector
+		local forward = Vector3.new(lookVector.X, 0, lookVector.Z)
+		local right = Vector3.new(cam.CFrame.RightVector.X, 0, cam.CFrame.RightVector.Z)
+	
+		forward = forward.Magnitude > 0 and forward.Unit or Vector3.new()
+		right = right.Magnitude > 0 and right.Unit or Vector3.new()
+	
+		local moveDir = Vector3.new()
+		local verticalLook = lookVector.Y
+	
+		if keysDown[Enum.KeyCode.W] then
+			if verticalLook < -0.3 then
+				moveDir = moveDir - Vector3.new(0,1,0)
+			elseif verticalLook > 0.3 then
+				moveDir = moveDir + Vector3.new(0,1,0)
+			else
+				moveDir = moveDir + forward
+			end
+		end
+	
+		if keysDown[Enum.KeyCode.S] then
+			if verticalLook > 0.3 then
+				moveDir = moveDir - Vector3.new(0,1,0)
+			elseif verticalLook < -0.3 then
+				moveDir = moveDir + Vector3.new(0,1,0)
+			else
+				moveDir = moveDir - forward
+			end
+		end
+	
+		if keysDown[Enum.KeyCode.A] then
+			moveDir = moveDir - right
+		end
+		if keysDown[Enum.KeyCode.D] then
+			moveDir = moveDir + right
+		end
+	
+		if keysDown[Enum.KeyCode.Space] then
+			moveDir = moveDir + Vector3.new(0,1,0)
+		end
+		if keysDown[Enum.KeyCode.LeftShift] then
+			moveDir = moveDir - Vector3.new(0,1,0)
+		end
+	
+		return moveDir
+	end
+	
+	local function onInputBegan(input, gameProcessed)
+		if gameProcessed then return end
+		if input.UserInputType == Enum.UserInputType.Keyboard then
+			keysDown[input.KeyCode] = true
+		end
+	end
+	
+	local function onInputEnded(input, gameProcessed)
+		if gameProcessed then return end
+		if input.UserInputType == Enum.UserInputType.Keyboard then
+			keysDown[input.KeyCode] = false
+		end
+	end
+	
+	local function onRenderStep()
+		if not flying then return end
+		local moveDirection = updateMoveDirection()
+		if moveDirection.Magnitude > 0 then
+			bodyVelocity.Velocity = moveDirection.Unit * speed
+		else
+			bodyVelocity.Velocity = Vector3.new(0,0,0)
+		end
+		bodyGyro.CFrame = workspace.CurrentCamera.CFrame
+	end
+	
+	local inputBeganConn
+	local inputEndedConn
+	
+	local function startFlying()
+		if flying then return end
+		flying = true
+		humanoid.PlatformStand = true
+	
+		bodyVelocity = Instance.new("BodyVelocity")
+		bodyVelocity.MaxForce = Vector3.new(1e5,1e5,1e5)
+		bodyVelocity.Parent = hrp
+	
+		bodyGyro = Instance.new("BodyGyro")
+		bodyGyro.MaxTorque = Vector3.new(1e5,1e5,1e5)
+		bodyGyro.Parent = hrp
+	
+		inputBeganConn = UserInputService.InputBegan:Connect(onInputBegan)
+		inputEndedConn = UserInputService.InputEnded:Connect(onInputEnded)
+		RunService:BindToRenderStep("Fly", Enum.RenderPriority.Character.Value + 1, onRenderStep)
+	
+		StarterGui:SetCore("SendNotification", {
+			Title = "PressureCMD";
+			Text = "You are flying, press the button again to stop flying. (Left Shift and Space are other controls)";
+			Duration = 5;
+		})
+	end
+	
+	local function stopFlying()
+		if not flying then return end
+		flying = false
+		humanoid.PlatformStand = false
+	
+		if bodyVelocity then
+			bodyVelocity:Destroy()
+			bodyVelocity = nil
+		end
+		if bodyGyro then
+			bodyGyro:Destroy()
+			bodyGyro = nil
+		end
+	
+		if inputBeganConn then
+			inputBeganConn:Disconnect()
+			inputBeganConn = nil
+		end
+		if inputEndedConn then
+			inputEndedConn:Disconnect()
+			inputEndedConn = nil
+		end
+	
+		RunService:UnbindFromRenderStep("Fly")
+		keysDown = {}
+	
+		StarterGui:SetCore("SendNotification", {
+			Title = "PressureCMD";
+			Text = "Stopped flying";
+			Duration = 3;
+		})
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		if flying then
+			stopFlying()
+		else
+			startFlying()
+		end
+	end)
+	
+end
+coroutine.wrap(KJBD_fake_script)()
+local function SXYK_fake_script() -- Frame.Notification 
+	local script = Instance.new('LocalScript', Frame)
+
+	local StarterGui = game:GetService("StarterGui")
+	
+	StarterGui:SetCore("SendNotification", {
+		Title = "PressureCMD";
+		Text = "Made by i8i8d2d2 and Killstreak. Join the discord: https://discord.gg/FXAZk3mdZG";
+		Duration = 10; 
+	})
+	
+end
+coroutine.wrap(SXYK_fake_script)()
+local function UGXX_fake_script() -- SpeedBoost.LocalScript 
+	local script = Instance.new('LocalScript', SpeedBoost)
+
+	local button = script.Parent
+	local player = game.Players.LocalPlayer
+	local StarterGui = game:GetService("StarterGui")
+	
+	local speedBoosted = false
+	local normalSpeed = 16
+	local boostSpeed = 100
+	
+	local function applySpeedBoost(humanoid)
+		if speedBoosted then
+			humanoid.WalkSpeed = boostSpeed
+		else
+			humanoid.WalkSpeed = normalSpeed
+		end
+	end
+	
+	local function connectSpeedBypass(humanoid)
+		humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+			if speedBoosted and humanoid.WalkSpeed ~= boostSpeed then
+				humanoid.WalkSpeed = boostSpeed
+			end
+		end)
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoid = character:FindFirstChildWhichIsA("Humanoid")
+		if not humanoid then return end
+	
+		speedBoosted = not speedBoosted
+		applySpeedBoost(humanoid)
+	
+		if speedBoosted then
+			connectSpeedBypass(humanoid)
+		end
+	
+		StarterGui:SetCore("SendNotification", {
+			Title = "PressureCMD";
+			Text = "Speed Boost: " .. (speedBoosted and "ON" or "OFF");
+			Duration = 5;
+		})
+	end)
+	
+end
+coroutine.wrap(UGXX_fake_script)()
+local function ZBPH_fake_script() -- Frame.UIDrag 
+	local script = Instance.new('LocalScript', Frame)
+
+	local UIS = game:GetService('UserInputService')
+	local frame = script.Parent
+	local dragToggle = nil
+	local dragSpeed = 0.25
+	local dragStart = nil
+	local startPos = nil
+	
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	end
+	
+	frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+			dragToggle = true
+			dragStart = input.Position
+			startPos = frame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+	
+	UIS.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
+end
+coroutine.wrap(ZBPH_fake_script)()
